@@ -16,6 +16,34 @@ enum RecordingState: String {
     case finishedRecording
 }
 
+enum StreamingMode: String, CaseIterable {
+    case liveStreaming      // Only send frames, no file recording
+    case fileRecording      // Only record to file, no frame streaming
+    case hybrid             // Both frame streaming and file recording
+
+    var displayName: String {
+        switch self {
+        case .liveStreaming:
+            return "Live Streaming"
+        case .fileRecording:
+            return "File Recording"
+        case .hybrid:
+            return "Hybrid Mode"
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .liveStreaming:
+            return "Stream frames in real-time without recording to file"
+        case .fileRecording:
+            return "Record video to file without live streaming"
+        case .hybrid:
+            return "Both live streaming and file recording"
+        }
+    }
+}
+
 final class HostVM: NSObject, ObservableObject {
     private let serviceType = "video-peer"
     private let peerId = MCPeerID(displayName: UIDevice.current.name)
@@ -30,6 +58,7 @@ final class HostVM: NSObject, ObservableObject {
     
     @Published private(set) var connectedPeers: [MCPeerID] = []
     @Published private(set) var recordingState: RecordingState = .notRecording
+    @Published var streamingMode: StreamingMode = .hybrid
     
     init(viewController: HostVC) {
         peerSession = MCSession(peer: peerId,
@@ -120,16 +149,22 @@ extension HostVM: MCSessionDelegate {
     func session(_ session: MCSession,
                  didReceive data: Data,
                  fromPeer peerID: MCPeerID) {
-        if let imageData = UIImage(data: data) {
-            // FIXME: Implement view finder preview handler here
+        print("[HostVM] Received data from \(peerID.displayName) - size: \(data.count) bytes")
+
+        if let image = UIImage(data: data) {
+            // Display streamed frame from peer
+            print("[HostVM] Data is an image frame - dimensions: \(image.size.width)x\(image.size.height)")
+            viewController?.updateStreamImage(image)
         } else {
+            // This is video file data, not a streaming frame
+            print("[HostVM] Data is video file - saving to disk")
             try? FileManager.default.removeItem(at: fileUrl)
             do {
                 try data.write(to: fileUrl)
                 showVideoPlayer(from: fileUrl)
                 changeRecordingState()
             } catch {
-                print(error.localizedDescription)
+                print("[HostVM] Error saving video file: \(error.localizedDescription)")
             }
         }
     }

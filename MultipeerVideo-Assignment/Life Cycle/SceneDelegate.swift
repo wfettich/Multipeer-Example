@@ -17,11 +17,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
+
+        // Device type determines mode: iPad → Host, iPhone → Streamer
         if UIDevice.current.userInterfaceIdiom == .pad {
             window?.rootViewController = HostVC()
         } else {
             window?.rootViewController = StreamerVC()
         }
+
         window?.makeKeyAndVisible()
     }
 }

@@ -26,6 +26,7 @@ final class StreamerVM: NSObject, ObservableObject {
     @Published private(set) var connectedPeer: MCPeerID? = nil
     @Published private(set) var recordingState: RecordingState = .notRecording
     @Published private(set) var videoOrientation: AVCaptureVideoOrientation = .portrait
+    @Published var streamingMode: StreamingMode = .hybrid
     
     init(viewController: StreamerVC) {
         motionManager = CMMotionManager()
@@ -124,9 +125,12 @@ final class StreamerVM: NSObject, ObservableObject {
                 try peerSession.send(data,
                                      toPeers: [connectedPeer],
                                      with: .unreliable)
+                print("[StreamerVM] Sent frame to \(connectedPeer.displayName) - size: \(data.count) bytes")
+            } else {
+                print("[StreamerVM] Cannot send frame - no peer connected")
             }
         } catch {
-            print(error.localizedDescription)
+            print("[StreamerVM] Error sending frame: \(error.localizedDescription)")
         }
     }
     

@@ -15,6 +15,7 @@ final class HostVC: UIViewController {
     @IBOutlet private weak var seeVideoButton: UIButton!
     @IBOutlet private weak var previewCameraView: UIView!
     @IBOutlet private weak var recordButton: UIButton!
+    @IBOutlet private weak var streamImageView: UIImageView!
     
     private var viewModel: HostVM!
     private var disposables = Set<AnyCancellable>()
@@ -31,6 +32,34 @@ final class HostVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBindings()
+
+        // Verify streamImageView is properly configured
+        streamImageView.backgroundColor = .darkGray
+        streamImageView.contentMode = .scaleAspectFit
+        print("[HostVC] viewDidLoad - streamImageView frame: \(streamImageView.frame), hidden: \(streamImageView.isHidden)")
+
+        // Test with a placeholder image
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            guard let self = self else { return }
+            // Create a simple test image to verify the imageView works
+            let size = CGSize(width: 100, height: 100)
+            let renderer = UIGraphicsImageRenderer(size: size)
+            let testImage = renderer.image { context in
+                UIColor.systemBlue.setFill()
+                context.fill(CGRect(origin: .zero, size: size))
+            }
+            self.streamImageView.image = testImage
+            print("[HostVC] Test image set - imageView should now show blue square")
+        }
+    }
+
+    func updateStreamImage(_ image: UIImage) {
+        print("[HostVC] updateStreamImage called - image size: \(image.size.width)x\(image.size.height)")
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.streamImageView.image = image
+            print("[HostVC] Image updated on main thread - imageView frame: \(self.streamImageView.frame), hidden: \(self.streamImageView.isHidden)")
+        }
     }
     
     private func setupBindings() {

@@ -327,7 +327,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6J2XDDYT2W;
+				DEVELOPMENT_TEAM = EWU35MGF9R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "MultipeerVideo-Assignment/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs your camera permission to record video and send it to the host.";
@@ -361,7 +361,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6J2XDDYT2W;
+				DEVELOPMENT_TEAM = EWU35MGF9R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "MultipeerVideo-Assignment/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs your camera permission to record video and send it to the host.";

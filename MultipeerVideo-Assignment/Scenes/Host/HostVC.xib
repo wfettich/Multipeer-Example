@@ -16,6 +16,7 @@
                 <outlet property="previewCameraView" destination="XwQ-EU-AQK" id="pEf-se-8R6"/>
                 <outlet property="recordButton" destination="11t-RE-hql" id="lf8-3g-xBW"/>
                 <outlet property="seeVideoButton" destination="YPQ-SI-Pqz" id="AAf-kf-edh"/>
+                <outlet property="streamImageView" destination="STR-01-IMV" id="str-01-con"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -64,8 +65,18 @@
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XwQ-EU-AQK">
                     <rect key="frame" x="644" y="56" width="350" height="726"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="STR-01-IMV">
+                            <rect key="frame" x="0.0" y="0.0" width="350" height="726"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </imageView>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="STR-01-IMV" firstAttribute="leading" secondItem="XwQ-EU-AQK" secondAttribute="leading" id="Im1-LE-ad1"/>
+                        <constraint firstItem="STR-01-IMV" firstAttribute="trailing" secondItem="XwQ-EU-AQK" secondAttribute="trailing" id="Im1-TR-ai1"/>
+                        <constraint firstItem="STR-01-IMV" firstAttribute="top" secondItem="XwQ-EU-AQK" secondAttribute="top" id="Im1-TO-p01"/>
+                        <constraint firstItem="STR-01-IMV" firstAttribute="bottom" secondItem="XwQ-EU-AQK" secondAttribute="bottom" id="Im1-BO-tt1"/>
                         <constraint firstAttribute="width" constant="350" id="Uz1-4v-Zk7"/>
                     </constraints>
                 </view>
